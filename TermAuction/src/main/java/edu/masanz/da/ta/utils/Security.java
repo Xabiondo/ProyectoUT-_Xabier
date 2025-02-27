@@ -12,7 +12,6 @@ public class Security {
      * Generates a random salt.
      * @return the generated salt
      */
-
     public static String generateSalt() {
         SecureRandom sr = new SecureRandom();
         byte[] salt = new byte[24];

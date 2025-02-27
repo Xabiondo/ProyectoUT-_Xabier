@@ -1,4 +1,3 @@
-
 package edu.masanz.da.ta.conf;
 
 public class Ini {
@@ -25,6 +24,7 @@ public class Ini {
             "4,Figura de \"Chichi\",Figura anime esposa de Goku. Caja de 15 cm x 10 cm x 20 cm. Peso 0.3 kg. Plástico PVC.,25,https://i.postimg.cc/qvZVy0BP/chichi.png,Javi,1,false",
             "5,Figura de \"La Cosa\",Tamaño aprox: 18 cm altura x 16 cm anchura x 4 cm profundidad. Buen estado. Sin caja. Año 1994.,20,https://i.postimg.cc/ZK7DDHk3/cosa.png,Aitor,1,false"
     };
+
     public static final String[] PUJAS = {
             "5,Silvia,25,2024-12-31 23:52:01.265",
             "5,Alba,21,2025-01-01 08:37:14.323",

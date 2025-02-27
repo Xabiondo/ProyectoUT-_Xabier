@@ -22,10 +22,7 @@ public class Dao {
 
     private static Map<Long, Item> mapaItems;
 
-
-
     private static Map<Long, List<Puja>> mapaPujas;
-
     //endregion
 
     //region Inicialización de la base de datos simulada
@@ -37,89 +34,19 @@ public class Dao {
 
     private static void iniMapaUsuarios() {
         // TODO 01 iniMapaUsuarios
-
-        for (String usuario : USUARIOS){
-            String[]partes = usuario.split(",");
-            Usuario usuario1 = new Usuario(partes[0] , partes[1] , partes[2] , partes[3]);
-            mapaUsuarios.put(partes[0] , usuario1);
-
-
-
-        }
     }
 
     private static void iniMapaItems() {
         // TODO 02 iniMapaItems
-
-        for (String  item : USUARIOS){
-            String[]partes = item.split(",");
-            long id = Long.parseLong(partes[0]);
-            int precioInicio = Integer.parseInt(partes[3]);
-            int estado  = Integer.parseInt(partes[6]);
-            boolean historico = Boolean.parseBoolean(partes[7]);
-            // En caso de que no haga falta castear , no lo hago
-            // y lo hago directamente desde el array resultatnte del split.
-            Item item1 = new Item(id , partes[1] , partes [2] , precioInicio , partes[4] , partes[5] , estado , historico);
-
-            mapaItems.put(id , item1);
-
-
-
-        }
     }
 
     private static void iniMapaPujas() {
         // TODO 03 iniMapaPujas
-        mapaUsuarios = new Map<Long, List<Puja>>() ;
-
-
-
-
-
-
-
-
-
-
-
-        long contador = 0 ;
-
-        for (String pujas : PUJAS){
-            String[]partes = pujas.split(",");
-
-
-            long idItem = Long.parseLong(partes[0]);
-            int precioPujado = Integer.parseInt(partes[2]);
-            Puja puja1 = new Puja(idItem , partes[1] , precioPujado , partes[3]);
-            listaPujas.add(puja1);
-
-            mapaPujas.put(contador , listaPujas);
-            contador++;
-
-        }
-
     }
     //endregion
 
     //region Usuarios
     public static boolean autenticar(String nombreUsuario, String password) {
-
-        boolean usuarioCreado = false;
-
-
-            if (mapaUsuarios.containsKey(nombreUsuario)){
-                usuarioCreado = true;
-
-            }else{ System.out.println("el usuario no esta en la base de datos");
-                    return false;}
-
-
-
-        if (usuarioCreado){
-            Usuario usuario = mapaUsuarios.get(nombreUsuario);
-           return Security.validateHashedPasswordSalt(password , usuario.getSal() , usuario.getHashPwSal() );
-        }
-
 //        return password.equals("1234");
         // TODO 04 autenticar
         return false;
@@ -128,126 +55,32 @@ public class Dao {
     public static boolean esAdmin(String nombreUsuario) {
 //        return nombreUsuario.equalsIgnoreCase("Admin");
         // TODO 05 esAdmin
-        boolean usuarioCreado = false;
-        if (mapaUsuarios.containsKey(nombreUsuario)){
-            usuarioCreado = true;
-        }
-
-        if (usuarioCreado){
-            Usuario usuario = mapaUsuarios.get(nombreUsuario);
-            if (usuario.getRol().equalsIgnoreCase("Admin")){
-                return true;
-            }
-        }
         return false;
     }
 
     public static List<Usuario> obtenerUsuarios() {
-
-        ArrayList<Usuario> usuarios = new ArrayList<>();
-
-
-        for (int i = 0 ; i < mapaUsuarios.size() ; i++){
-            Usuario usuario = mapaUsuarios.get(i);
-            usuarios.add(usuario);
-
-
-        }
-        System.out.println(usuarios);
         // TODO 06 obtenerUsuarios
         return null;
     }
 
     public static boolean crearUsuario(String nombre, String password, boolean esAdmin) {
-
-        boolean nombreIgual = false;
-        for (Usuario user : mapaUsuarios.values()){
-
-            if (user.getNombre().equalsIgnoreCase(nombre)){
-                nombreIgual = true;
-                break;
-            }
-
-        }
-
-        if (nombreIgual){
-
-        String saltUsuario = Security.generateSalt();
-        String hashSaltUsuario = Security.hash(password);
-        String rolUsuario = "";
-
-        if (esAdmin){
-            rolUsuario = "Admin";
-            return true;
-
-        }else  rolUsuario = "user";
-        Usuario usuario = new Usuario( nombre , saltUsuario , hashSaltUsuario , rolUsuario );
-        mapaUsuarios.put(nombre,usuario);
-        return true;
-        }
-
-
         // TODO 07 crearUsuario
-        return false;
+        return true;
     }
 
     public static boolean modificarPasswordUsuario(String nombre, String password) {
-        boolean existeUsuario = false;
-
-        for (Usuario usuario : mapaUsuarios.values()){
-
-            if (usuario.getNombre().equalsIgnoreCase(nombre)){
-                existeUsuario = true;
-                break;
-            }
-        }
-
-        if (existeUsuario){
-            String contrasenia = (mapaUsuarios.get(nombre).getSal() + password);
-            String contraseniaHash = Security.hash(contrasenia);
-            mapaUsuarios.get(nombre).setHashPwSal(contraseniaHash);
-            return true;
-
-
-
-        }
-
-
         // TODO 08 modificarPasswordUsuario
         return false;
-
-
     }
 
     public static boolean modificarRolUsuario(String nombre, String rol) {
-        boolean existeUsuario = false;
-
-        for (Usuario usuario : mapaUsuarios.values()){
-
-            if (usuario.getNombre().equalsIgnoreCase(nombre)){
-                existeUsuario = true;
-                break;
-            }
-        }
-        if (existeUsuario){
-            mapaUsuarios.get(nombre).setRol("Admin");
-            return true;
-        }
-
-
-
         // TODO 09 modificarRolUsuario
         return false;
     }
 
     public static boolean eliminarUsuario(String nombre) {
         // TODO 10 eliminarUsuario
-
-        if (mapaUsuarios.get(nombre)!= null){
-            mapaUsuarios.remove(mapaUsuarios.get(nombre));
-            return true;
-        }
-        return false;
+        return true;
     }
 
     //endregion
